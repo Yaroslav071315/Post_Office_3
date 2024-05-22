@@ -24,8 +24,25 @@ namespace Post_Office_3
         {
             InitializeComponent();
             _context = new AppDbContext();
+            //Dispose context after Form is closing
+            this.FormClosed += new FormClosedEventHandler(Form1_FormClosed);
+
+            void Form1_FormClosed(object sender, FormClosedEventArgs e)
+            {
+                Dispose();
+            }
+
         }
 
+        //Function for Dispose context after Form is closing
+        public void Dispose()
+        {
+            if (_context != null)
+            {
+                _context.Dispose();
+
+            }
+        }
         private void Post_Office_Load(object sender, EventArgs e)
         {
 
@@ -115,12 +132,16 @@ namespace Post_Office_3
                 _context.SaveChanges();
 
                 MessageBox.Show("Parcel added successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 
+
+
                 weightF.Clear();
                 datesendF.Clear();
                 datecomeF.Clear();
                 priceF.Clear();
+
+
+                
             }
             catch (Exception ex)
             {
@@ -397,5 +418,6 @@ namespace Post_Office_3
                 MessageBox.Show("Error retrieving parcels. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+      
     }
 }
